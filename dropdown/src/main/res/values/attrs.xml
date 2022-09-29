@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="DropdownView">
+        <attr name="expanded" format="boolean" />
+        <attr name="elevation" format="dimension" />
+        <attr name="cardCornerRadius" format="dimension" />
+        <attr name="cardBackground" format="reference|color" />
+        <attr name="cardBackgroundExpanded" format="reference|color" />
+        <attr name="arrow" format="reference" />
+        <attr name="arrowTint" format="color" />
+        <attr name="arrowTintExpanded" format="color" />
+        <attr name="arrowRotation" format="enum">
+            <enum name="reverse_quarter" value="-90" />
+            <enum name="quarter" value="90" />
+            <enum name="half" value="-180" />
+        </attr>
+        <attr name="useDivider" format="boolean" />
+        <attr name="dividerHeight" format="dimension" />
+        <attr name="dividerColor" format="color" />
+        <attr name="titleBackgroundExpanded" format="reference|color" />
+        <attr name="titleText" format="string" />
+        <attr name="titleTextColor" format="color" />
+        <attr name="titleTextColorExpanded" format="color" />
+        <attr name="titleTextSize" format="dimension" />
+        <attr name="titleTextFont" format="string" />
+        <attr name="titleTextBold" format="boolean" />
+        <attr name="contentText" format="string" />
+        <attr name="contentTextColor" format="color" />
+        <attr name="contentTextSize" format="dimension" />
+        <attr name="contentTextFont" format="string" />
+        <attr name="contentTextBold" format="boolean" />
+    </declare-styleable>
+</resources>

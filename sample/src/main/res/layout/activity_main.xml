@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="10dp">
+
+        <com.farasource.component.dropdown.DropdownView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            app:arrow="@drawable/ic_baseline_arrow_drop_down_24"
+            app:arrowRotation="half"
+            app:cardBackground="#F06292"
+            app:cardBackgroundExpanded="@drawable/custom"
+            app:cardCornerRadius="0dp"
+            app:contentText="@string/def_text"
+            app:contentTextColor="#E91E63"
+            app:titleBackgroundExpanded="#F06292"
+            app:titleText="Title" />
+
+        <com.farasource.component.dropdown.DropdownView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            android:elevation="3dp"
+            app:arrowTint="@color/black"
+            app:arrowTintExpanded="@color/white"
+            app:cardBackground="#03A9F4"
+            app:cardCornerRadius="5dp"
+            app:contentText="@string/def_text"
+            app:dividerColor="#fff"
+            app:dividerHeight="2dp"
+            app:titleText="Title"
+            app:titleTextColor="@color/white"
+            app:useDivider="true" />
+
+        <com.farasource.component.dropdown.DropdownView
+            android:id="@+id/dropdown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            android:elevation="3dp"
+            app:arrow="@drawable/ic_round_arrow_right_24"
+            app:arrowRotation="quarter"
+            app:arrowTint="@color/white"
+            app:arrowTintExpanded="@color/white"
+            app:cardBackground="@color/colorPrimary"
+            app:cardBackgroundExpanded="@color/colorPrimary"
+            app:cardCornerRadius="10dp"
+            app:contentText="@string/def_text"
+            app:contentTextBold="false"
+            app:contentTextColor="@color/white"
+            app:contentTextFont="fonts/font.ttf"
+            app:contentTextSize="17dp"
+            app:dividerColor="#e2e2e2"
+            app:dividerHeight="1dp"
+            app:elevation="0dp"
+            app:expanded="false"
+            app:titleBackgroundExpanded="@color/colorPrimary"
+            app:titleText="@string/app_name"
+            app:titleTextBold="true"
+            app:titleTextColor="@color/white"
+            app:titleTextColorExpanded="@color/white"
+            app:titleTextFont="fonts/font.ttf"
+            app:titleTextSize="17dp"
+            app:useDivider="false" />
+
+
+        <com.farasource.component.dropdown.DropdownView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:elevation="6dp"
+            app:arrowTint="#FFF176"
+            app:cardBackground="#AB47BC"
+            app:cardBackgroundExpanded="#fff"
+            app:cardCornerRadius="15dp"
+            app:contentText="@string/def_text"
+            app:contentTextColor="#AB47BC"
+            app:titleBackgroundExpanded="#AB47BC"
+            app:titleText="Title"
+            app:titleTextColor="@color/white" />
+
+        <com.farasource.component.dropdown.DropdownView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:elevation="6dp"
+            app:arrow="@drawable/ic_baseline_arrow_drop_down_24"
+            app:arrowRotation="half"
+            app:arrowTint="@color/purple_500"
+            app:cardBackground="@color/white"
+            app:cardCornerRadius="20dp"
+            app:contentText="@string/def_text"
+            app:contentTextColor="#434343"
+            app:dividerColor="@color/purple_500"
+            app:titleText="title"
+            app:titleTextColor="@color/purple_500"
+            app:useDivider="true" />
+
+    </LinearLayout>
+</ScrollView>
