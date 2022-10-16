@@ -14,13 +14,26 @@ dependencies {
 }
 ```
 
-Then you need to add jitpack as your maven repository in `build.gradle`  file:
+Then you need to add jitpack as your maven repository:
 
+* **New method** add in `settings.gradle` file:
 ```groovy
-repositories {
-    google()
-    jcenter()
-    maven { url 'https://jitpack.io' }
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
+
+* **Old method** add in `build.gradle` file:
+```groovy
+allprojects {
+    repositories {
+        maven { url 'https://jitpack.io' }
+    }
 }
 ```
 
