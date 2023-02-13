@@ -19,12 +19,12 @@ public class MainActivity extends AppCompatActivity {
         dropdownView.setExpanded(false); // or setExpanded(false, /* animate */true)
         dropdownView.setElevation(0);
         dropdownView.setCardCornerRadius(10);
-        dropdownView.setCardBackgroundColor(getResources().getColor(R.color.colorPrimary)); // or setCardBackground(drawable)
-        dropdownView.setCardBackgroundColorExpanded(getResources().getColor(R.color.colorPrimary)); // option
+        dropdownView.setCardBackgroundColor(getResources().getColor(R.color.purple_500)); // or setCardBackground(drawable)
+        dropdownView.setCardBackgroundColorExpanded(getResources().getColor(R.color.purple_500)); // option
         dropdownView.setArrow(com.farasource.component.dropdown.R.drawable.ic_round_arrow_right_24); // or setArrow(drawable)
         dropdownView.setArrowTint(Color.WHITE);
         dropdownView.setArrowTintExpanded(Color.WHITE); // option
-        dropdownView.setArrowRotation(DropdownView.RotationModel.QUARTER);
+        dropdownView.setArrowRotation(DropdownView.QUARTER);
         dropdownView.setUseDivider(false);
         dropdownView.setDividerColor(0xffe2e2e2);
         dropdownView.setDividerHeight(1);

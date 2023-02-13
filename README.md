@@ -14,13 +14,26 @@ dependencies {
 }
 ```
 
-Then you need to add jitpack as your maven repository in `build.gradle`  file:
+Then you need to add jitpack as your maven repository:
 
+* **New method** add in `settings.gradle` file:
 ```groovy
-repositories {
-    google()
-    jcenter()
-    maven { url 'https://jitpack.io' }
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
+
+* **Old method** add in `build.gradle` file:
+```groovy
+allprojects {
+    repositories {
+        maven { url 'https://jitpack.io' }
+    }
 }
 ```
 
@@ -39,7 +52,7 @@ dropdownView.setCardBackgroundColorExpanded(getResources().getColor(R.color.colo
 dropdownView.setArrow(com.farasource.component.dropdown.R.drawable.ic_round_arrow_right_24); // or setArrow(drawable)
 dropdownView.setArrowTint(Color.WHITE);
 dropdownView.setArrowTintExpanded(Color.WHITE); // option
-dropdownView.setArrowRotation(DropdownView.RotationModel.QUARTER);
+dropdownView.setArrowRotation(DropdownView.QUARTER);
 dropdownView.setUseDivider(false);
 dropdownView.setDividerColor(0xffe2e2e2);
 dropdownView.setDividerHeight(1);

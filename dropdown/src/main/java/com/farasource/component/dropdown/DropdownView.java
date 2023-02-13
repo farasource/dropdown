@@ -30,6 +30,7 @@ import java.lang.annotation.RetentionPolicy;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
+import androidx.annotation.IntDef;
 import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -49,6 +50,7 @@ public class DropdownView extends LinearLayout {
     private int arrowTint, arrowTintExpanded;
     private int titleHeight, contentHeight, dividerHeight;
     private boolean useDivider, expanded, isMoving;
+    @RotationModel
     private int arrowRotation;
 
     public DropdownView(@NonNull Context context) {
@@ -64,27 +66,27 @@ public class DropdownView extends LinearLayout {
         setOrientation(VERTICAL);
         TypedArray typed = context.obtainStyledAttributes(attrs, R.styleable.DropdownView, defStyleAttr, 0);
         elevation = typed.getDimension(R.styleable.DropdownView_elevation, getElevation());
-        cardCornerRadius = typed.getDimension(R.styleable.DropdownView_cardCornerRadius, px2dpf(10));
+        cardCornerRadius = typed.getDimension(R.styleable.DropdownView_cardCornerRadius, dpf(10));
         cardBackground = getMultiColourAttr(getContext(), typed, R.styleable.DropdownView_cardBackground, null);
         cardBackgroundExpanded = getMultiColourAttr(getContext(), typed, R.styleable.DropdownView_cardBackgroundExpanded, cardBackground);
         int resourceId = typed.getResourceId(R.styleable.DropdownView_arrow, R.drawable.ic_round_arrow_right_24);
         Drawable arrowIcon = ResourcesCompat.getDrawable(context.getResources(), resourceId, null);
         arrowTint = typed.getColor(R.styleable.DropdownView_arrowTint, Color.WHITE);
         arrowTintExpanded = typed.getColor(R.styleable.DropdownView_arrowTintExpanded, arrowTint);
-        arrowRotation = typed.getInteger(R.styleable.DropdownView_arrowRotation, RotationModel.QUARTER);
+        arrowRotation = typed.getInteger(R.styleable.DropdownView_arrowRotation, QUARTER);
         useDivider = typed.getBoolean(R.styleable.DropdownView_useDivider, false);
-        dividerHeight = (int) typed.getDimension(R.styleable.DropdownView_dividerHeight, px2dpf(1));
+        dividerHeight = (int) typed.getDimension(R.styleable.DropdownView_dividerHeight, dpf(1));
         int dividerColor = typed.getColor(R.styleable.DropdownView_dividerColor, 0xffe2e2e2);
         titleBackgroundExpanded = getMultiColourAttr(getContext(), typed, R.styleable.DropdownView_titleBackgroundExpanded, null, true);
         String titleText = typed.getString(R.styleable.DropdownView_titleText);
         titleTextColor = typed.getColor(R.styleable.DropdownView_titleTextColor, Color.WHITE);
         titleTextColorExpanded = typed.getColor(R.styleable.DropdownView_titleTextColorExpanded, titleTextColor);
-        float titleTextSize = typed.getDimension(R.styleable.DropdownView_titleTextSize, px2dpf(17));
+        float titleTextSize = typed.getDimension(R.styleable.DropdownView_titleTextSize, dpf(17));
         String titleTextFont = typed.getString(R.styleable.DropdownView_titleTextFont);
         boolean titleTextBold = typed.getBoolean(R.styleable.DropdownView_titleTextBold, true);
         String contentText = typed.getString(R.styleable.DropdownView_contentText);
         contentTextColor = typed.getColor(R.styleable.DropdownView_contentTextColor, Color.WHITE);
-        float contentTextSize = typed.getDimension(R.styleable.DropdownView_contentTextSize, px2dpf(17));
+        float contentTextSize = typed.getDimension(R.styleable.DropdownView_contentTextSize, dpf(17));
         String contentTextFont = typed.getString(R.styleable.DropdownView_contentTextFont);
         boolean contentTextBold = typed.getBoolean(R.styleable.DropdownView_contentTextBold, false);
         expanded = typed.getBoolean(R.styleable.DropdownView_expanded, false);
@@ -145,15 +147,15 @@ public class DropdownView extends LinearLayout {
 
     @Override
     public void setElevation(float elevation) {
-        this.elevation = px2dpf(elevation);
+        this.elevation = dpf(elevation);
         super.setElevation(elevation);
     }
 
-    public void setCardCornerRadius(float cardCornerRadius) {
-        if (this.cardCornerRadius == cardCornerRadius) {
+    public void setCardCornerRadius(float radius) {
+        if (this.cardCornerRadius == radius) {
             return;
         }
-        this.cardCornerRadius = cardCornerRadius;
+        this.cardCornerRadius = radius;
         if (cardBackground instanceof PaintDrawable) {
             PaintDrawableSetCornerRadius((PaintDrawable) cardBackground, true);
         }
@@ -167,20 +169,24 @@ public class DropdownView extends LinearLayout {
         titleLinearLayout.setBackground(expanded ? null : titleBackgroundExpanded);
     }
 
+    public void setTitleBackgroundColor(@ColorInt int color) {
+        setCardBackgroundColor(color);
+    }
+
     public void setCardBackgroundColor(@ColorInt int color) {
         setCardBackground(createColorDrawable(color, true));
     }
 
-    public void setCardBackground(Drawable cardBackground) {
+    public void setCardBackground(Drawable drawable) {
         if (this.cardBackground == cardBackgroundExpanded) {
-            cardBackgroundExpanded = cardBackground;
+            cardBackgroundExpanded = drawable;
             if (expanded) {
-                setBackground(cardBackground);
+                setBackground(drawable);
             }
         }
-        this.cardBackground = cardBackground;
+        this.cardBackground = drawable;
         if (!expanded) {
-            setBackground(cardBackground);
+            setBackground(drawable);
         }
     }
 
@@ -188,22 +194,21 @@ public class DropdownView extends LinearLayout {
         setCardBackgroundExpanded(createColorDrawable(color, true));
     }
 
-    public void setCardBackgroundExpanded(Drawable cardBackgroundExpanded) {
-        this.cardBackgroundExpanded = cardBackgroundExpanded;
+    public void setCardBackgroundExpanded(Drawable drawable) {
+        this.cardBackgroundExpanded = drawable;
         if (expanded) {
-            setBackground(cardBackgroundExpanded);
+            setBackground(drawable);
         }
     }
-
 
     public void setTitleBackgroundColorExpanded(@ColorInt int color) {
         setTitleBackgroundExpanded(createColorDrawable(color, false));
     }
 
-    public void setTitleBackgroundExpanded(Drawable titleBackgroundExpanded) {
-        this.titleBackgroundExpanded = titleBackgroundExpanded;
+    public void setTitleBackgroundExpanded(Drawable drawable) {
+        this.titleBackgroundExpanded = drawable;
         if (expanded) {
-            titleLinearLayout.setBackground(titleBackgroundExpanded);
+            titleLinearLayout.setBackground(drawable);
         }
     }
 
@@ -215,35 +220,35 @@ public class DropdownView extends LinearLayout {
         arrow.setImageDrawable(drawable);
     }
 
-    public void setArrowTint(int arrowTint) {
-        if (this.arrowTint == arrowTint) {
+    public void setArrowTint(@ColorInt int color) {
+        if (this.arrowTint == color) {
             return;
         }
         if (this.arrowTint == arrowTintExpanded) {
-            arrowTintExpanded = arrowTint;
+            arrowTintExpanded = color;
             if (expanded) {
-                if (Color.TRANSPARENT == arrowTint) {
+                if (Color.TRANSPARENT == color) {
                     arrow.clearColorFilter();
                 } else {
-                    arrow.setColorFilter(arrowTint);
+                    arrow.setColorFilter(color);
                 }
             }
         }
-        this.arrowTint = arrowTint;
-        if (Color.TRANSPARENT == arrowTint) {
+        this.arrowTint = color;
+        if (Color.TRANSPARENT == color) {
             arrow.clearColorFilter();
         } else if (!expanded) {
-            arrow.setColorFilter(arrowTint);
+            arrow.setColorFilter(color);
         }
     }
 
-    public void setArrowTintExpanded(int arrowTintExpanded) {
-        if (this.arrowTintExpanded == arrowTintExpanded) {
+    public void setArrowTintExpanded(@ColorInt int color) {
+        if (this.arrowTintExpanded == color) {
             return;
         }
-        this.arrowTintExpanded = arrowTintExpanded;
+        this.arrowTintExpanded = color;
         if (expanded) {
-            arrow.setColorFilter(arrowTintExpanded);
+            arrow.setColorFilter(color);
         }
     }
 
@@ -268,8 +273,8 @@ public class DropdownView extends LinearLayout {
         divider.setVisibility(useDivider ? VISIBLE : GONE);
     }
 
-    public void setDividerHeight(int pxHeight) {
-        int height = (int) px2dpf(pxHeight);
+    public void setDividerHeight(int height) {
+        height = (int) dpf(height);
         if (dividerHeight == height) {
             return;
         }
@@ -277,30 +282,30 @@ public class DropdownView extends LinearLayout {
         divider.setLayoutParams(createLinear(LayoutParams.MATCH_PARENT, dividerHeight));
     }
 
-    public void setDividerColor(int dividerColor) {
-        divider.setBackgroundColor(dividerColor);
+    public void setDividerColor(@ColorInt int color) {
+        divider.setBackgroundColor(color);
     }
 
     public void setTitleText(String title) {
         this.title.setText(title);
     }
 
-    public void setTitleTextColor(int titleTextColor) {
-        this.titleTextColor = titleTextColor;
+    public void setTitleTextColor(@ColorInt int color) {
+        this.titleTextColor = color;
         if (!expanded) {
-            title.setTextColor(titleTextColor);
+            title.setTextColor(color);
         }
     }
 
-    public void setTitleTextColorExpanded(int titleTextColorExpanded) {
-        this.titleTextColorExpanded = titleTextColorExpanded;
+    public void setTitleTextColorExpanded(@ColorInt int color) {
+        this.titleTextColorExpanded = color;
         if (expanded) {
-            title.setTextColor(titleTextColorExpanded);
+            title.setTextColor(color);
         }
     }
 
-    public void setTitleTextSize(int titleTextColor) {
-        title.setTextSize(TypedValue.COMPLEX_UNIT_DIP, titleTextColor);
+    public void setTitleTextSize(int size) {
+        title.setTextSize(TypedValue.COMPLEX_UNIT_DIP, size);
     }
 
     public void setTitleTypeface(Typeface titleTypeface) {
@@ -321,13 +326,13 @@ public class DropdownView extends LinearLayout {
         this.content.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
-    public void setContentTextColor(int contentTextColor) {
-        this.contentTextColor = contentTextColor;
-        content.setTextColor(contentTextColor);
+    public void setContentTextColor(@ColorInt int color) {
+        this.contentTextColor = color;
+        content.setTextColor(color);
     }
 
-    public void setContentTextSize(int contentTextColor) {
-        content.setTextSize(TypedValue.COMPLEX_UNIT_DIP, contentTextColor);
+    public void setContentTextSize(int size) {
+        content.setTextSize(TypedValue.COMPLEX_UNIT_DIP, size);
     }
 
     public void setContentTypeface(Typeface contentTypeface) {
@@ -427,14 +432,14 @@ public class DropdownView extends LinearLayout {
         title.setMaxLines(2);
         title.setEllipsize(TextUtils.TruncateAt.END);
         titleLinearLayout.addView(title, createLinear(0, LayoutParams.WRAP_CONTENT, 1, Gravity.CENTER_VERTICAL));
-        titleLinearLayout.setPadding((int) px2dpf(10), 0, (int) px2dpf(10), 0);
-        titleLinearLayout.addView(arrow, createLinear((int) px2dpf(24), (int) px2dpf(24), 0, Gravity.CENTER_VERTICAL, 10, 0, 0, 0));
-        titleHeight = (int) px2dpf(60);
+        titleLinearLayout.setPadding((int) dpf(10), 0, (int) dpf(10), 0);
+        titleLinearLayout.addView(arrow, createLinear((int) dpf(24), (int) dpf(24), 0, Gravity.CENTER_VERTICAL, 10, 0, 0, 0));
+        titleHeight = (int) dpf(60);
         addView(titleLinearLayout, createLinear(LayoutParams.MATCH_PARENT, titleHeight));
         divider.setBackgroundColor(dividerColor);
         divider.setVisibility(useDivider ? VISIBLE : GONE);
         addView(divider, createLinear(LayoutParams.MATCH_PARENT, dividerHeight, 0, Gravity.NO_GRAVITY, 0, 0, 0, 5));
-        content.setPadding((int) px2dpf(10), 0, (int) px2dpf(10), (int) px2dpf(10));
+        content.setPadding((int) dpf(10), 0, (int) dpf(10), (int) dpf(10));
         addView(content, createLinear(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         post(() -> expandOrCollapseContent(expanded, false));
     }
@@ -443,7 +448,7 @@ public class DropdownView extends LinearLayout {
         int widthMS = MeasureSpec.makeMeasureSpec(getWidth(), MeasureSpec.AT_MOST);
         int heightMS = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
         content.measure(widthMS, heightMS);
-        contentHeight = (int) (content.getMeasuredHeight() + px2dpf(10));
+        contentHeight = (int) (content.getMeasuredHeight() + dpf(10));
     }
 
     @Keep
@@ -538,9 +543,18 @@ public class DropdownView extends LinearLayout {
             Drawable drawable = typed.getDrawable(index);
             if (drawable != null) return drawable;
             else if (def != null || force) return def;
-            color = context.getResources().getColor(R.color.colorPrimary);
+            color = fetchPrimaryColor();
         }
         return createColorDrawable(color, !force);
+    }
+
+    private int fetchPrimaryColor() {
+        TypedValue outValue = new TypedValue();
+        getContext().getTheme().resolveAttribute(android.R.attr.colorPrimary, outValue, true);
+        if (outValue.data > Color.TRANSPARENT) {
+            return outValue.data;
+        }
+        return 0XFF607D8B;
     }
 
     private Drawable createColorDrawable(int color, boolean allCorners) {
@@ -565,7 +579,7 @@ public class DropdownView extends LinearLayout {
         }
     }
 
-    private float px2dpf(float value) {
+    private float dpf(float value) {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, getResources().getDisplayMetrics());
     }
 
@@ -581,10 +595,10 @@ public class DropdownView extends LinearLayout {
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(w, h);
         lp.weight = weight;
         lp.gravity = gravity;
-        lp.topMargin = (int) px2dpf(mt);
-        lp.bottomMargin = (int) px2dpf(mb);
-        lp.setMarginStart((int) px2dpf(ms));
-        lp.setMarginEnd((int) px2dpf(me));
+        lp.topMargin = (int) dpf(mt);
+        lp.bottomMargin = (int) dpf(mb);
+        lp.setMarginStart((int) dpf(ms));
+        lp.setMarginEnd((int) dpf(me));
         return lp;
     }
 
@@ -593,9 +607,10 @@ public class DropdownView extends LinearLayout {
     public final static int REVERSE_QUARTER = -90;
 
     @Retention(RetentionPolicy.SOURCE)
-    public @interface RotationModel {
-        int QUARTER = DropdownView.QUARTER;
-        int HALF = DropdownView.HALF;
-        int REVERSE_QUARTER = DropdownView.REVERSE_QUARTER;
-    }
+    @IntDef({
+            QUARTER,
+            HALF,
+            REVERSE_QUARTER,
+    })
+    public @interface RotationModel {}
 }
